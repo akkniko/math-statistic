@@ -81,57 +81,27 @@ for n in sizes:
     print("====================================\n")
 
 
-fig, axs = plt.subplots(1, 3, figsize=(15, 10))
-# titles = ["rho = 0", "rho = 0.5", "rho = 0.9", "Mixture"]
-
-# for i, task in enumerate([0, 0.5, 0.9]):
-#     if task == "mixture":
-#         data = generate_data(100, 0, is_mixture=True)
-#     else:
-#         data = generate_data(100, task, is_mixture=False)
-    
-#     x, y = data[:, 0], data[:, 1]
-#     axs[i].scatter(x, y, s=10, alpha=0.5)
-#     axs[i].set_title(titles[i])
-#     draw_ellipse(x, y, axs[i])
-#     axs[i].set_xlim(-4, 4) # Чтобы смесь влезла в график
-#     axs[i].set_ylim(-4, 4)
-
-# sizes = [20, 60, 100]
 fig, axs = plt.subplots(1, 3, figsize=(18, 5))
 
 for i, n in enumerate(sizes):
-    # Генерируем данные (смесь)
     data = generate_data(n, 0, is_mixture=True)
     x, y = data[:, 0], data[:, 1]
     
-    # Рисуем точки
     axs[i].scatter(x, y, s=15, alpha=0.9, edgecolors='black', linewidth=0.5)
     
-    # Рисуем эллипс
     draw_ellipse(x, y, axs[i])
     
-    # Заголовок и оформление
     axs[i].set_title(f"Смесь распределений (n = {n})")
     axs[i].set_xlabel("X")
     axs[i].set_ylabel("Y")
     axs[i].grid(True, linestyle='--', alpha=0.6)
     
-    # Устанавливаем лимиты. 
-    # ВНИМАНИЕ: смесь имеет выбросы в районе +-15 и дальше.
-    # Если поставить (-4, 4), мы увидим только "ядро". 
-    # Поставим чуть побольше, чтобы увидеть масштаб катастрофы:
+
     axs[i].set_xlim(-5, 5)
     axs[i].set_ylim(-5, 5)
     
     if i == 0:
         axs[i].legend()
-
-# plt.tight_layout()
-
-# Если на Linux через Wayland/X11 не открывается окно, 
-# раскомментируй строку ниже, чтобы сохранить в файл:
-# plt.savefig("mixture_scatter.png")
 
 plt.show()
 #export QT_QPA_PLATFORM=wayland
